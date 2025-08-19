@@ -62,7 +62,13 @@ export default function decorate(block) {
       }
       if(deliveryType === 'dm-openapi'){
 
-          //block.children[1].querySelectorAll('picture > img')[0];
+          const imageElement = block.children[1].querySelectorAll('picture > img')[0];
+          imageElement.onerror = function() {
+            console.warn('Failed to load image in dynamicmedia-image');
+            // Set fallback image
+            this.src = 'https://smartimaging.scene7.com/is/image/DynamicMediaNA/WKND%20Template?wid=2000&hei=2000&qlt=100&fit=constrain'; // Replace with your fallback image path
+            this.alt = 'Fallback image - template image not correctly authored';
+          };
         
           block.children[6]?.remove();
           block.children[5]?.remove();
@@ -71,7 +77,6 @@ export default function decorate(block) {
           block.children[2]?.remove();  
           block.children[0]?.remove();       
       }
-      
   }else{
     block.innerHTML = '';
   }
